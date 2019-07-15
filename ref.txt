@@ -1,0 +1,5 @@
+https://zetawiki.com/wiki/Npm_%EC%84%A4%EC%B9%98%EB%90%9C_%EC%A0%84%EC%97%AD%EB%AA%A8%EB%93%88_%ED%99%95%EC%9D%B8
+
+
+npm 설치된 전역모듈 목록 확인
+npm ls -g --depth=0
