@@ -155,11 +155,10 @@ class CommentWriteForm extends React.Component {
   }
 
   handleSubmitNewComment(e){
-    let value = this.state.newComment;
+    this.props.submitNewComment(this.state.newComment);
     this.setState({
       newComment : ''
     });
-    this.props.submitNewComment(value);
   }
 
   handleChangeComment(e){
@@ -175,7 +174,8 @@ class CommentWriteForm extends React.Component {
           <input type="text" 
             className="form-control" 
             aria-label="..." 
-            onChange={this.handleChangeComment.bind(this)}/>
+            onChange={this.handleChangeComment.bind(this)}
+            value={this.state.newComment}/>
           <div className="input-group-btn">
             <button type="button"
               className="btn btn-default" 
