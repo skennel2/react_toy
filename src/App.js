@@ -97,6 +97,26 @@ class ArticleDetail extends React.Component {
     });
   }
 
+  handleSubmitNewComment(newComment){
+    axios.put("http://localhost:8080/api/comment", {
+      writer_id : 1,
+      article_id : this.state.article.articleId,
+      contents : newComment
+    }).then(result => {
+      this.refreshCommentList();
+    });
+  }
+
+  refreshCommentList(){
+    let commentUrl = 'http://localhost:8080/api/comment/byarticle/' + this.props.match.params.articleId;
+    
+    axios.get(commentUrl).then(result => {
+      this.setState({
+        commentList : result.data
+      });
+    });
+  }
+
   render(){
     return(
       <div className = 'panel panel-default'>
@@ -106,21 +126,64 @@ class ArticleDetail extends React.Component {
         <div className="panel-body">
           <p>{this.state.article.contents}</p>
         </div>
-        <CommentList commentList = {this.state.commentList}/>
+        <CommentList commentList = {this.state.commentList} submitNewComment={this.handleSubmitNewComment.bind(this)}/>
       </div>
     )
   }
 }
 
 class CommentList extends React.Component { 
+  handleSubmitNewComment(contents){
+    this.props.submitNewComment(contents)
+  }
+
   render(){
     return(
       <ul className='list-group'> 
-      {this.props.commentList.map(comment => {
-        return (<li key={comment.commentId} className = 'list-group-item'>{comment.contents}</li>)
-      })}
+        {this.props.commentList.map(comment => {
+          return (<li key={comment.commentId} className = 'list-group-item'>{comment.contents}</li>)
+        })}
+        <CommentWriteForm submitNewComment={this.handleSubmitNewComment.bind(this)}/>
       </ul>
     )
+  }
+}
+
+class CommentWriteForm extends React.Component {
+  state = {
+    newComment : ''
+  }
+
+  handleSubmitNewComment(e){
+    let value = this.state.newComment;
+    this.setState({
+      newComment : ''
+    });
+    this.props.submitNewComment(value);
+  }
+
+  handleChangeComment(e){
+    this.setState({
+      newComment : e.target.value.trim()
+    })
+  }
+
+  render(){
+    return (
+      <li className = 'list-group-item'>
+        <div className="input-group">
+          <input type="text" 
+            className="form-control" 
+            aria-label="..." 
+            onChange={this.handleChangeComment.bind(this)}/>
+          <div className="input-group-btn">
+            <button type="button"
+              className="btn btn-default" 
+              onClick={this.handleSubmitNewComment.bind(this)}>댓글달기</button>
+          </div>
+        </div>
+      </li>
+    );
   }
 }
 
