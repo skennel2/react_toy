@@ -10,6 +10,7 @@ export class ArticleListItem extends React.Component {
         <Link to={detailArticleUrl}>
           {this.props.article.subject}
         </Link>
+        &nbsp; <span class="badge">{this.props.article.countOfComments}</span>
       </td>
       <td>{this.props.article.writerLoginId}</td>
     </tr>);
