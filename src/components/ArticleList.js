@@ -6,6 +6,7 @@ export class ArticleList extends React.Component {
   state = {
     articleList: []
   };
+
   componentDidMount() {
     axios.get('http://localhost:8080/api/article/byaccount/skennel').then(res => {
       this.setState({
@@ -13,6 +14,7 @@ export class ArticleList extends React.Component {
       });
     });
   }
+  
   render() {
     return (<table className="table">
       <thead>

@@ -13,22 +13,21 @@ export class CommentWriteForm extends React.Component {
         showNoCommentContentsAlert: true
       });
       return;
-    }else {
-      this.setState({
-        showNoCommentContentsAlert: false
-      });
     }
 
     this.props.submitNewComment(this.state.newComment);
     this.setState({
-      newComment: ''
+      newComment: '',
+      showNoCommentContentsAlert: false
     });
   }
+
   handleChangeComment(e) {
     this.setState({
-      newComment: e.target.value.trim()
+      newComment: e.target.value
     });
   }
+  
   render() {
     var alertDom = (<div></div>);
     if(this.state.showNoCommentContentsAlert){

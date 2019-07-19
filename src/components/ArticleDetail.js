@@ -7,6 +7,7 @@ export class ArticleDetail extends React.Component {
     article: {},
     commentList: []
   };
+  
   componentDidMount() {
     let articleUrl = 'http://localhost:8080/api/article/' + this.props.match.params.articleId;
     let commentUrl = 'http://localhost:8080/api/comment/byarticle/' + this.props.match.params.articleId;
