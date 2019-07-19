@@ -18,8 +18,9 @@ export class ArticleDetail extends React.Component {
           commentList: result2.data
         });
       });
-    });
+    });    
   }
+  
   handleSubmitNewComment(newComment) {
     axios.put("http://localhost:8080/api/comment", {
       writer_id: 1,
@@ -29,6 +30,7 @@ export class ArticleDetail extends React.Component {
       this.refreshCommentList();
     });
   }
+
   refreshCommentList() {
     let commentUrl = 'http://localhost:8080/api/comment/byarticle/' + this.props.match.params.articleId;
     axios.get(commentUrl).then(result => {
@@ -37,6 +39,7 @@ export class ArticleDetail extends React.Component {
       });
     });
   }
+
   render() {
     return (<div className='panel panel-default'>
       <div className="panel-heading">
