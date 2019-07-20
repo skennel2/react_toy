@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { ArticleListItem } from "./ArticleListItem";
+import { GLOBAL } from '../Global' 
 
 export class ArticleList extends React.Component {
   state = {
@@ -8,7 +9,7 @@ export class ArticleList extends React.Component {
   };
 
   componentDidMount() {
-    axios.get('http://localhost:8080/api/article/byaccount/skennel').then(res => {
+    axios.get(GLOBAL.ApiServerRoot + '/api/article/byaccount/skennel').then(res => {
       this.setState({
         articleList: res.data
       });
@@ -21,6 +22,7 @@ export class ArticleList extends React.Component {
         <tr>
           <th scope="col">#</th>
           <th scope="col">Subject</th>
+          <th scope="col">Date</th>
           <th scope="col">Writer</th>
         </tr>
       </thead>

@@ -1,7 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import { ArticleList } from './components/ArticleList';
 import { ArticleDetail } from './components/ArticleDetail';
+import { NotFound } from './components/NotFound'
 
 class App extends React.Component {
   render (){
@@ -19,8 +20,12 @@ class App extends React.Component {
           </nav>
           <hr/>
           <hr/>
-          <Route exact path="/" component={ArticleList} />
-          <Route path="/article/:articleId" component={ArticleDetail} />
+          <Switch>
+            <Route exact path="/" component={ArticleList} />
+            <Route path="/article/:articleId" component={ArticleDetail} />
+            <Route path="/notfound" component={NotFound} />
+            <Route path="*" component={NotFound} />
+          </Switch>
         </div>
       </Router>
     );
