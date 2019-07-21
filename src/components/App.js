@@ -3,21 +3,14 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import { ArticleList } from './ArticleList';
 import { ArticleDetail } from './ArticleDetail';
 import { NotFound } from './NotFound'
+import { Navbar } from './Navbar'
 
 class App extends React.Component {
   render (){
     return ( 
       <Router>
         <div className = 'container'>       
-          <nav className="navbar navbar-default navbar-fixed-top">            
-            <div className="container-fluid">
-              <ul className="nav navbar-nav">
-                <li role="presentation"><Link to="/">목록</Link></li>
-                <li role="presentation"></li>
-                <li role="presentation"></li>                
-              </ul>
-            </div>
-          </nav>
+          <Navbar />
           <hr/>
           <hr/>
           <Switch>
