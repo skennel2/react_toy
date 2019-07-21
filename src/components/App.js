@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-import { ArticleList } from './components/ArticleList';
-import { ArticleDetail } from './components/ArticleDetail';
-import { NotFound } from './components/NotFound'
+import { ArticleList } from './ArticleList';
+import { ArticleDetail } from './ArticleDetail';
+import { NotFound } from './NotFound'
 
 class App extends React.Component {
   render (){

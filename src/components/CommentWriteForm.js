@@ -29,7 +29,7 @@ export class CommentWriteForm extends React.Component {
   }
   
   render() {
-    var alertDom = (<div></div>);
+    var alertDom;
     if(this.state.showNoCommentContentsAlert){
       alertDom = (<Alert mode='warning' message='댓글을 입력해주세요.'/>)
     }
