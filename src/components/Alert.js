@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export class Alert extends React.Component {
     render(){
@@ -8,4 +9,9 @@ export class Alert extends React.Component {
             <div className={classNameByMode} role="alert">{this.props.message}</div>
         );
     }
+}
+
+Alert.propTypes = {
+    mode : PropTypes.string.isRequired,
+    message : PropTypes.string.isRequired
 }
