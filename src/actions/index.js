@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const READ_ARTICLE_LIST = 'READ_ARTICLE_LIST';
 export const READ_ARTICLE_DETAIL = 'READ_ARTICLE_DETAIL';
 export const READ_COMMENT_BY_ARTICLE_ID = 'READ_COMMENT_BY_ARTICLE_ID';
@@ -28,4 +30,8 @@ export function addComment(payload){
         type : ADD_COMMENT,
         payload
     }
+}
+
+export function fetchArticle(){
+    //axios.
 }
