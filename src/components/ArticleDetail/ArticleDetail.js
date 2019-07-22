@@ -1,17 +1,20 @@
 import React from 'react';
 import axios from 'axios';
 import { CommentList } from "./CommentList";
-import { GLOBAL } from '../Global' 
+import { GLOBAL } from '../../Global' 
 
 export class ArticleDetail extends React.Component {
   state = {
-    article: {},
-    commentList: []
+    article : {},
+    commentList : []
   };
-  
-  componentDidMount() {
-    let articleUrl = GLOBAL.ApiServerRoot + '/api/article/' + this.props.match.params.articleId;
-    let commentUrl = GLOBAL.ApiServerRoot + '/api/comment/byarticle/' + this.props.match.params.articleId;
+
+  componentWillMount(){    
+    var articleId = this.props.match.params.articleId;
+
+    let articleUrl = GLOBAL.ApiServerRoot + '/api/article/' + articleId;
+    let commentUrl = GLOBAL.ApiServerRoot + '/api/comment/byarticle/' + articleId;
+
     axios.get(articleUrl).then(result => {
       if(result.status === 204){
         this.props.history.push('/notfound');
@@ -23,9 +26,9 @@ export class ArticleDetail extends React.Component {
           commentList: result2.data
         });
       });
-    }); 
+    });     
   }
-  
+
   handleSubmitNewComment(newComment) {
     axios.put(GLOBAL.ApiServerRoot + "/api/comment", {
       writer_id: 1,

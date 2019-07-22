@@ -1,5 +1,6 @@
 import React from 'react';
 import { CommentWriteForm } from "./CommentWriteForm";
+import { Comment } from './Comment';
 import PropTypes from 'prop-types';
 
 export class CommentList extends React.Component {
@@ -15,13 +16,7 @@ export class CommentList extends React.Component {
     return (<ul className='list-group'>
       {this.props.commentList.map(comment => {
         return (
-          <li key={comment.commentId} className='list-group-item'>
-            <div>
-              <strong>{comment.writerLoginId}</strong>&nbsp;&nbsp;&nbsp;
-              <small>{this.toDisplayDate(comment.createdDateTime)}</small>
-            </div>
-            <p>{comment.contents}</p>
-          </li>
+          <Comment key={comment.commentId} className='list-group-item' comment = {comment}/>
         );
       })}
       <CommentWriteForm submitNewComment={this.handleSubmitNewComment.bind(this)} />
@@ -29,4 +24,7 @@ export class CommentList extends React.Component {
   }
 }
 
-
+CommentList.propTypes = {
+  submitNewComment :  PropTypes.func.isRequired,
+  commentList : PropTypes.array
+}

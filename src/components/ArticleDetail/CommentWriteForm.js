@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert } from './Alert'
+import { Alert } from '../Alert'
 import PropTypes from 'prop-types';
 
 export class CommentWriteForm extends React.Component {
@@ -17,6 +17,7 @@ export class CommentWriteForm extends React.Component {
     }
 
     this.props.submitNewComment(this.state.newComment);
+    
     this.setState({
       newComment: '',
       showNoCommentContentsAlert: false
