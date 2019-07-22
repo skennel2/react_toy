@@ -1,28 +1,24 @@
-import { ADD_COMMENT, READ_ARTICLE_DETAIL, READ_ARTICLE_LIST, READ_COMMENT_BY_ARTICLE_ID } from '../actions'
+import { START_READ_ARTICLE_LIST, FINISH_READ_ARTICLE_LIST } from '../actions'
 import { combineReducers } from 'redux';
 
 const initialState = {
     articleList : [],
-    commentList : [],
-    selectedArticleDetail : {}
+    isLoading : false,
+    pageNumber : 0,
 };
 
-const mockArticle = {
-    articleId: 20,
-    contents: "Mock",
-    countOfComments: 0,
-    createdDate: "2019-07-22T10:48:29.737",
-    subject: "Mock",
-    writerId: 1,
-    writerLoginId: "skennel",
-}
-
 const articleListReducer = function (state = initialState, action){
-    if(action.type === READ_ARTICLE_LIST){
+    if(action.type === START_READ_ARTICLE_LIST){
         return {
-            articleList : [mockArticle],
-            commentList : state.commentList,
-            selectedArticleDetail : state.selectedArticleDetail
+            articleList : state.articleList,
+            isLoading : true,
+            pageNumber : state.pageNumber + 1
+        }
+    } else if(action.type === FINISH_READ_ARTICLE_LIST){
+        return {
+            articleList : state.articleList.concat(action.articleList),
+            isLoading : false,
+            pageNumber : state.pageNumber
         }
     } else {
         return state;
@@ -34,9 +30,6 @@ const reducers = combineReducers({
 }); 
 
 export default reducers;
-
-
-
 
 // articleId: 3
 // commentId: 17

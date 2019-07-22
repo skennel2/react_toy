@@ -3,33 +3,30 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import GLOBAL from '../../Global' 
 import { ArticleListItem } from "./ArticleListItem";
-import { readArticleList } from '../../actions'
+import { startReadArticleList, finishReadArticleList } from '../../actions'
 
-export class ArticleList extends React.Component {
-
-  state = {
-    articleList : [],
-    page : 0,
-    size : 30,
-    isLoading : false
-  };
-
+class ArticleList extends React.Component {
+  
   constructor(props) {
     super(props)
-
-
     this.infiniteScroll = this.infiniteScroll.bind(this);
   }
 
   onClickArticle(articleId){
-    console.log(this)
   }
 
   componentWillMount() {
-    axios.get(GLOBAL.ApiServerRoot + '/api/article/list/0/30').then(res => {
-      this.setState({
-        articleList: res.data
-      });
+    if(this.props.pageNumber !== 0){
+      return;
+    }
+    
+    let size = 30;
+
+    this.props.startRead();
+
+    var url = GLOBAL.ApiServerRoot + '/api/article/list/' + this.props.pageNumber +'/'+ size;
+    axios.get(url).then(res => {
+      this.props.finishRead(res.data);
     });
   }
 
@@ -41,44 +38,25 @@ export class ArticleList extends React.Component {
     window.removeEventListener('scroll', this.infiniteScroll);
   }
 
-  infiniteScroll(){
+  infiniteScroll(e){
     let scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
     let scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
 
     let clientHeight = document.documentElement.clientHeight;
 
-    if(scrollTop + clientHeight === scrollHeight){
-      this.readArticle();
+    let offset = 2;
+    if(scrollTop + clientHeight + offset > scrollHeight){
+      if(this.props.isLoading === false){
+        this.props.startRead();
+        console.log(this.props.pageNumber);
+        axios.get(GLOBAL.ApiServerRoot + '/api/article/list/'+ this.props.pageNumber +'/30').then(res => {
+          this.props.finishRead(res.data);
+        }); 
+      }
     }
   }
 
-  readArticle(){
-    let nextPage = this.state.page + 1;
-
-    this.setState({
-      isLoading : true
-    });
-
-    axios.get(GLOBAL.ApiServerRoot + '/api/article/list/'+ nextPage +'/30').then(res => {
-      let data = this.state.articleList.concat(res.data);
-      this.setState({
-        articleList: data,
-        page : nextPage,
-        isLoading : false
-      });
-    });    
-  }
-
   render() {
-    // var loadingDOM
-    // if(this.state.isLoading){
-    //   return (
-    //   <tr>
-    //     <td colSpan='4' scope="col">로딩중</td>
-    //   </tr>
-    //   );
-    // }
-
     return (
     <table className="table table-striped table-hover">
       <thead className="thead-dark">
@@ -90,28 +68,35 @@ export class ArticleList extends React.Component {
         </tr>
       </thead>
       <tbody>
-        {this.state.articleList.map((article, index) => {
+        {this.props.articleList.map((article, index) => {
           return (<ArticleListItem key={article.articleId} 
-                    article={article} 
-                    onClickArticle={this.onClickArticle.bind(this)}/>);
+                                   article={article} 
+                                  onClickArticle={this.onClickArticle.bind(this)}/>);
         })}
-        
       </tbody>
     </table>);
   }
 }
 
-// const mapDispatchToProps = function(dispatch) {
-//   return {
-//     onLoad : function(){
-//       dispatch(readArticleList())
-//     }
-//   }
-// }
+const mapDispatchToProps = function(dispatch) {
+  return {
+    startRead : function(){
+      dispatch(startReadArticleList())
+    },
+    finishRead : function(articleList){
+      dispatch(finishReadArticleList(articleList))
+    }
+  }
+};
 
-// const mapStateToProps = state => ({
-//   products: state.products.items,
-//   loading: state.products.loading,
-//   error: state.products.error
-// });
+const mapStateToProps = function(state){
+  return { 
+    articleList : state.articleListReducer.articleList,
+    isLoading : state.articleListReducer.isLoading,
+    pageNumber : state.articleListReducer.pageNumber
+  };
+};
 
+ArticleList = connect(mapStateToProps, mapDispatchToProps)(ArticleList);
+
+export default ArticleList;
