@@ -52,10 +52,13 @@ export class ArticleList extends React.Component {
   }
 
   readArticle(){
-    axios.get(GLOBAL.ApiServerRoot + '/api/article/list/1/30').then(res => {
+    let nextPage = this.state.page + 1;
+
+    axios.get(GLOBAL.ApiServerRoot + '/api/article/list/'+ nextPage +'/30').then(res => {
       let data = this.state.articleList.concat(res.data);
       this.setState({
-        articleList: data
+        articleList: data,
+        page : nextPage
       });
     });    
   }
