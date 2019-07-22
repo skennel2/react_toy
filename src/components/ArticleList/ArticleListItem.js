@@ -3,10 +3,6 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 export class ArticleListItem extends React.Component {
-  onClickArticle(e) {
-    this.props.onClickArticle(this.props.article.articleId)
-  }
-
   render() {
     let detailArticleUrl = '/article/' + this.props.article.articleId;
 
@@ -18,7 +14,7 @@ export class ArticleListItem extends React.Component {
     return (<tr>
       <th>{this.props.article.articleId}</th>
       <td>
-        <Link to={detailArticleUrl} onClick = {this.onClickArticle.bind(this)}>
+        <Link to={detailArticleUrl}>
           {this.props.article.subject}
         </Link>
         &nbsp; {commentCountDom}

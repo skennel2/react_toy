@@ -12,14 +12,11 @@ class ArticleList extends React.Component {
     this.infiniteScroll = this.infiniteScroll.bind(this);
   }
 
-  onClickArticle(articleId){
-  }
-
   componentWillMount() {
     if(this.props.pageNumber !== 0){
       return;
     }
-    
+
     let size = 30;
 
     this.props.startRead();
@@ -70,8 +67,7 @@ class ArticleList extends React.Component {
       <tbody>
         {this.props.articleList.map((article, index) => {
           return (<ArticleListItem key={article.articleId} 
-                                   article={article} 
-                                  onClickArticle={this.onClickArticle.bind(this)}/>);
+                                   article={article}/>);
         })}
       </tbody>
     </table>);
