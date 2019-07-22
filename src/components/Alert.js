@@ -12,6 +12,6 @@ export class Alert extends React.Component {
 }
 
 Alert.propTypes = {
-    mode : PropTypes.string.isRequired,
+    mode : PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']),
     message : PropTypes.string.isRequired
 }

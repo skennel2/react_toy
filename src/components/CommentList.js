@@ -1,5 +1,6 @@
 import React from 'react';
 import { CommentWriteForm } from "./CommentWriteForm";
+import PropTypes from 'prop-types';
 
 export class CommentList extends React.Component {
   handleSubmitNewComment(contents) {
@@ -27,3 +28,5 @@ export class CommentList extends React.Component {
     </ul>);
   }
 }
+
+

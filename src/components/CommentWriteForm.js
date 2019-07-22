@@ -1,5 +1,6 @@
 import React from 'react';
 import { Alert } from './Alert'
+import PropTypes from 'prop-types';
 
 export class CommentWriteForm extends React.Component {
   state = {
@@ -47,3 +48,8 @@ export class CommentWriteForm extends React.Component {
     );
   }
 }
+
+CommentWriteForm.propTypes = {
+  submitNewComment :  PropTypes.func.isRequired
+}
+

@@ -23,7 +23,7 @@ export class ArticleDetail extends React.Component {
           commentList: result2.data
         });
       });
-    });    
+    }); 
   }
   
   handleSubmitNewComment(newComment) {
