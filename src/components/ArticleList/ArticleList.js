@@ -6,10 +6,18 @@ import { ArticleListItem } from "./ArticleListItem";
 import { readArticleList } from '../../actions'
 
 export class ArticleList extends React.Component {
+
   state = {
     articleList : [],
     page : 0,
     size : 30
+  };
+
+  constructor(props) {
+    super(props)
+
+
+    this.infiniteScroll = this.infiniteScroll.bind(this);
   }
 
   onClickArticle(articleId){
@@ -25,7 +33,7 @@ export class ArticleList extends React.Component {
   }
 
   componentDidMount(){
-    window.addEventListener('scroll', this.infiniteScroll, true);
+    window.addEventListener('scroll', this.infiniteScroll);
   }
 
   componentWillUnmount() {
@@ -39,18 +47,15 @@ export class ArticleList extends React.Component {
     let clientHeight = document.documentElement.clientHeight;
 
     if(scrollTop + clientHeight === scrollHeight){
-      axios.get(GLOBAL.ApiServerRoot + '/api/article/list/0/30').then(res => {
-        this.setState({
-          page : 2
-        });
-      });  
+      this.readArticle();
     }
   }
 
   readArticle(){
-    axios.get(GLOBAL.ApiServerRoot + '/api/article/list/0/30').then(res => {
+    axios.get(GLOBAL.ApiServerRoot + '/api/article/list/1/30').then(res => {
+      let data = this.state.articleList.concat(res.data);
       this.setState({
-        articleList: this.state.articleList.push(res.data)
+        articleList: data
       });
     });    
   }
