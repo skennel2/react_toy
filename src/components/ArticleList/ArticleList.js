@@ -10,7 +10,8 @@ export class ArticleList extends React.Component {
   state = {
     articleList : [],
     page : 0,
-    size : 30
+    size : 30,
+    isLoading : false
   };
 
   constructor(props) {
@@ -54,18 +55,33 @@ export class ArticleList extends React.Component {
   readArticle(){
     let nextPage = this.state.page + 1;
 
+    this.setState({
+      isLoading : true
+    });
+
     axios.get(GLOBAL.ApiServerRoot + '/api/article/list/'+ nextPage +'/30').then(res => {
       let data = this.state.articleList.concat(res.data);
       this.setState({
         articleList: data,
-        page : nextPage
+        page : nextPage,
+        isLoading : false
       });
     });    
   }
 
   render() {
-    return (<table className="table">
-      <thead>
+    // var loadingDOM
+    // if(this.state.isLoading){
+    //   return (
+    //   <tr>
+    //     <td colSpan='4' scope="col">로딩중</td>
+    //   </tr>
+    //   );
+    // }
+
+    return (
+    <table className="table table-striped table-hover">
+      <thead className="thead-dark">
         <tr>
           <th scope="col">#</th>
           <th scope="col">Subject</th>          
@@ -79,6 +95,7 @@ export class ArticleList extends React.Component {
                     article={article} 
                     onClickArticle={this.onClickArticle.bind(this)}/>);
         })}
+        
       </tbody>
     </table>);
   }
