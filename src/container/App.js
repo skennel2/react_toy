@@ -13,12 +13,13 @@ class App extends React.Component {
     return ( 
       <BrowserRouter>
         <div className = 'container'>       
-          <Navbar />
+          <Navbar isLogin = {false}/>
           <hr/>
           <hr/>
           <Switch>
             <Route exact path="/" component={ArticleList}/> }/>
             <Route path="/article/:articleId" component= {ArticleDetail} />
+            <Route path="/login" component= {ArticleDetail} />
             <Route path="/notfound" component={NotFound} />
             <Route path="*" component={NotFound} />
           </Switch>

@@ -1,24 +1,58 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { GLOBAL } from '../../Global' 
+import GLOBAL from '../../Global' 
 import { ArticleListItem } from "./ArticleListItem";
 import { readArticleList } from '../../actions'
 
 export class ArticleList extends React.Component {
   state = {
-    articleList : []
+    articleList : [],
+    page : 0,
+    size : 30
   }
 
   onClickArticle(articleId){
+    console.log(this)
   }
 
   componentWillMount() {
-    axios.get(GLOBAL.ApiServerRoot + '/api/article/list').then(res => {
+    axios.get(GLOBAL.ApiServerRoot + '/api/article/list/0/30').then(res => {
       this.setState({
         articleList: res.data
       });
     });
+  }
+
+  componentDidMount(){
+    window.addEventListener('scroll', this.infiniteScroll, true);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.infiniteScroll);
+  }
+
+  infiniteScroll(){
+    let scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+    let scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+
+    let clientHeight = document.documentElement.clientHeight;
+
+    if(scrollTop + clientHeight === scrollHeight){
+      axios.get(GLOBAL.ApiServerRoot + '/api/article/list/0/30').then(res => {
+        this.setState({
+          page : 2
+        });
+      });  
+    }
+  }
+
+  readArticle(){
+    axios.get(GLOBAL.ApiServerRoot + '/api/article/list/0/30').then(res => {
+      this.setState({
+        articleList: this.state.articleList.push(res.data)
+      });
+    });    
   }
 
   render() {

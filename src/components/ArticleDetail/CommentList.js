@@ -25,6 +25,6 @@ export class CommentList extends React.Component {
 }
 
 CommentList.propTypes = {
-  submitNewComment :  PropTypes.func.isRequired,
+  submitNewComment :  PropTypes.func,
   commentList : PropTypes.array
 }

@@ -16,7 +16,7 @@ export class Comment extends React.Component {
 }
 
 Comment.propTypes = {
-    submitNewComment :  PropTypes.func.isRequired,
+    submitNewComment :  PropTypes.func,
     commentList : PropTypes.array
 }
   
