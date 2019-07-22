@@ -45,7 +45,7 @@ class ArticleList extends React.Component {
     if(scrollTop + clientHeight + offset > scrollHeight){
       if(this.props.isLoading === false){
         this.props.startRead();
-        console.log(this.props.pageNumber);
+        
         axios.get(GLOBAL.ApiServerRoot + '/api/article/list/'+ this.props.pageNumber +'/30').then(res => {
           this.props.finishRead(res.data);
         }); 
