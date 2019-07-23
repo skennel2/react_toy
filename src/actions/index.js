@@ -1,10 +1,13 @@
 export const START_READ_ARTICLE_LIST = 'START_READ_ARTICLE_LIST';
 export const FINISH_READ_ARTICLE_LIST = 'FINISH_READ_ARTICLE_LIST';
 
-export const READ_ARTICLE_DETAIL = 'READ_ARTICLE_DETAIL';
-export const READ_COMMENT_BY_ARTICLE_ID = 'READ_COMMENT_BY_ARTICLE_ID';
-export const ADD_COMMENT = 'ADD_COMMENT';
+export const START_READ_ARTICLE_DETAIL = 'START_READ_ARTICLE_DETAIL';
+export const FINISH_READ_ARTICLE_DETAIL = 'FINISH_READ_ARTICLE_DETAIL';
 
+export const START_READ_COMMENT_BY_ARTICLE_ID = 'READ_COMMENT_BY_ARTICLE_ID';
+export const FINISH_READ_COMMENT_BY_ARTICLE_ID = 'FINISH_READ_COMMENT_BY_ARTICLE_ID';
+
+export const ADD_COMMENT = 'ADD_COMMENT';
 
 export function startReadArticleList(page){
     return {
@@ -20,17 +23,31 @@ export function finishReadArticleList(articleList){
     }    
 }
 
-export function readArticleDetail(id){
+export function startReadArticleDetail(id){
     return {
-        type : READ_ARTICLE_DETAIL,
+        type : START_READ_ARTICLE_DETAIL,
         id : id
     }
 }
 
-export function readCommentByArticleId(articleId){
+export function finishArticleDetail(article){
     return {
-        type : READ_COMMENT_BY_ARTICLE_ID,
+        type : FINISH_READ_ARTICLE_DETAIL,
+        article : article
+    }
+}
+
+export function startReadCommentByArticleId(articleId){
+    return {
+        type : START_READ_COMMENT_BY_ARTICLE_ID,
         articleId : articleId
+    }
+}
+
+export function finishReadCommentByArticleId(commentList){
+    return {
+        type : FINISH_READ_COMMENT_BY_ARTICLE_ID,
+        commentList : commentList
     }
 }
 

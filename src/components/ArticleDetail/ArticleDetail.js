@@ -2,13 +2,10 @@ import React from 'react';
 import axios from 'axios';
 import { CommentList } from "./CommentList";
 import GLOBAL from '../../Global' 
+import { connect } from 'react-redux';
+import { startReadArticleDetail, startReadCommentByArticleId, finishArticleDetail, finishReadCommentByArticleId } from '../../actions'
 
 export class ArticleDetail extends React.Component {
-  state = {
-    article : {},
-    commentList : [],
-    isError : false
-  };
 
   componentWillMount(){    
     var articleId = this.props.match.params.articleId;
@@ -16,30 +13,25 @@ export class ArticleDetail extends React.Component {
     let articleUrl = GLOBAL.ApiServerRoot + '/api/article/' + articleId;
     let commentUrl = GLOBAL.ApiServerRoot + '/api/comment/byarticle/' + articleId;
 
+    this.props.startArticleRead(articleId);
+    this.props.startCommentRead(articleId);
+
     axios.get(articleUrl).then(result => {
-      if(result.status === 204){
-        this.setState({
-          isError : true
-        });
-        return;
-      }
       axios.get(commentUrl).then(result2 => {
-        this.setState({
-          article: result.data,
-          commentList: result2.data
-        });
+        this.props.finishArticleRead(result.data);
+        this.props.finishCommentRead(result2.data);
       }).catch(ex =>{
         console.log(ex);
       });
     }).catch(ex =>{
       console.log(ex);
-    });     
+    });
   }
 
   handleSubmitNewComment(newComment) {
     axios.put(GLOBAL.ApiServerRoot + "/api/comment", {
       writer_id: 1,
-      article_id: this.state.article.articleId,
+      article_id: this.props.article.articleId,
       contents: newComment
     }).then(result => {
       this.refreshCommentList();
@@ -56,20 +48,45 @@ export class ArticleDetail extends React.Component {
   }
 
   render() {
-    if(this.state.isError){
-      return(<div>해당하는 Article이 존재하지 않습니다.</div>)
-    }
-
     return (<div className='panel panel-primary'>
       <div className="panel-heading">
-        <h3 className="panel-title">{this.state.article.subject}</h3>
+        <h3 className="panel-title">{this.props.article.subject}</h3>
       </div>
       <div className="panel-body">
         <br/>
-        <p>{this.state.article.contents}</p>
+        <p>{this.props.article.contents}</p>
         <br/>
-        <CommentList commentList={this.state.commentList} submitNewComment={this.handleSubmitNewComment.bind(this)}/>
+        <CommentList commentList={this.props.commentList} submitNewComment={this.handleSubmitNewComment.bind(this)}/>
       </div>
     </div>);
   }
 }
+
+const mapStateToProps = function(state){
+  return { 
+    article : state.articleDetailReducer.article,
+    isLoading : state.articleDetailReducer.isLoading,
+    commentList : state.articleDetailReducer.commentList
+  };
+};
+
+const mapDispatchToProps = function(dispatch){
+  return {
+    startArticleRead : function(articleId){
+      dispatch(startReadArticleDetail(articleId))
+    },
+    finishArticleRead : function(article){
+      dispatch(finishArticleDetail(article))
+    },
+    startCommentRead : function(articleId){
+      dispatch(startReadCommentByArticleId(articleId))
+    },
+    finishCommentRead : function(commentList){
+      dispatch(finishReadCommentByArticleId(commentList))
+    } 
+  }
+}
+
+ArticleDetail = connect(mapStateToProps, mapDispatchToProps)(ArticleDetail);
+
+export default ArticleDetail;

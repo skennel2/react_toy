@@ -74,6 +74,14 @@ class ArticleList extends React.Component {
   }
 }
 
+const mapStateToProps = function(state){
+  return { 
+    articleList : state.articleListReducer.articleList,
+    isLoading : state.articleListReducer.isLoading,
+    pageNumber : state.articleListReducer.pageNumber
+  };
+};
+
 const mapDispatchToProps = function(dispatch) {
   return {
     startRead : function(){
@@ -83,14 +91,6 @@ const mapDispatchToProps = function(dispatch) {
       dispatch(finishReadArticleList(articleList))
     }
   }
-};
-
-const mapStateToProps = function(state){
-  return { 
-    articleList : state.articleListReducer.articleList,
-    isLoading : state.articleListReducer.isLoading,
-    pageNumber : state.articleListReducer.pageNumber
-  };
 };
 
 ArticleList = connect(mapStateToProps, mapDispatchToProps)(ArticleList);

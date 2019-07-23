@@ -1,13 +1,22 @@
-import { START_READ_ARTICLE_LIST, FINISH_READ_ARTICLE_LIST } from '../actions'
+import 
+{ 
+    START_READ_ARTICLE_LIST, 
+    FINISH_READ_ARTICLE_LIST, 
+    START_READ_ARTICLE_DETAIL, 
+    FINISH_READ_ARTICLE_DETAIL,
+    START_READ_COMMENT_BY_ARTICLE_ID,
+    FINISH_READ_COMMENT_BY_ARTICLE_ID 
+} from '../actions';
+
 import { combineReducers } from 'redux';
 
-const initialState = {
+const initialArticleListState = {
     articleList : [],
     isLoading : false,
     pageNumber : 0,
 };
 
-const articleListReducer = function (state = initialState, action){
+const articleListReducer = function (state = initialArticleListState, action){
     if(action.type === START_READ_ARTICLE_LIST){
         return {
             articleList : state.articleList,
@@ -25,15 +34,44 @@ const articleListReducer = function (state = initialState, action){
     }
 }
 
+const initialArticleDetailListState = {
+    article : {},
+    commentList : [],
+    isLoading : false
+}
+
+const articleDetailReducer = function (state = initialArticleDetailListState, action){
+    if(action.type === START_READ_ARTICLE_DETAIL){
+        return {
+            article : state.article,
+            commentList : state.commentList,
+            isLoading : true
+        }
+    } else if(action.type === FINISH_READ_ARTICLE_DETAIL){
+        return {
+            article : action.article,
+            commentList : state.commentList,
+            isLoading : false
+        }
+    } else if(action.type === START_READ_COMMENT_BY_ARTICLE_ID){
+        return {
+            article : state.article,
+            commentList : state.commentList,
+            isLoading : true
+        }
+    } else if(action.type === FINISH_READ_COMMENT_BY_ARTICLE_ID){
+        return {
+            article : state.article,
+            commentList : action.commentList,
+            isLoading : false
+        }
+    } else {
+        return state;
+    }
+}
+
 const reducers = combineReducers({
-    articleListReducer
+    articleListReducer, articleDetailReducer
 }); 
 
 export default reducers;
-
-// articleId: 3
-// commentId: 17
-// contents: "rgrgrg"
-// createdDateTime: "2019-07-22T14:20:40.35"
-// writerId: 1
-// writerLoginId: "skennel"
