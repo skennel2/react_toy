@@ -7,7 +7,8 @@ export const FINISH_READ_ARTICLE_DETAIL = 'FINISH_READ_ARTICLE_DETAIL';
 export const START_READ_COMMENT_BY_ARTICLE_ID = 'READ_COMMENT_BY_ARTICLE_ID';
 export const FINISH_READ_COMMENT_BY_ARTICLE_ID = 'FINISH_READ_COMMENT_BY_ARTICLE_ID';
 
-export const ADD_COMMENT = 'ADD_COMMENT';
+export const START_ADD_COMMENT = 'START_ADD_COMMENT';
+export const FINISH_ADD_COMMENT = 'FINISH_ADD_COMMENT';
 
 export function startReadArticleList(page){
     return {
@@ -51,9 +52,15 @@ export function finishReadCommentByArticleId(commentList){
     }
 }
 
-export function addComment(payload){
+export function startAddComment(){
     return {
-        type : ADD_COMMENT,
-        payload
+        type : START_ADD_COMMENT
+    }
+}
+
+export function finishAddComment(comment){
+    return {
+        type : FINISH_ADD_COMMENT,
+        comment : comment
     }
 }

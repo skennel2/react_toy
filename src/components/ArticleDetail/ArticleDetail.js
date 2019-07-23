@@ -48,17 +48,19 @@ export class ArticleDetail extends React.Component {
   }
 
   render() {
-    return (<div className='panel panel-primary'>
-      <div className="panel-heading">
-        <h3 className="panel-title">{this.props.article.subject}</h3>
+    return (
+      <div className='panel panel-primary'>
+        <div className="panel-heading">
+          <h3 className="panel-title">{this.props.article.subject}</h3>
+        </div>
+        <div className="panel-body">
+          <br/>
+          <p>{this.props.article.contents}</p>
+          <br/>
+          <CommentList commentList={this.props.commentList} submitNewComment={this.handleSubmitNewComment.bind(this)}/>
+        </div>
       </div>
-      <div className="panel-body">
-        <br/>
-        <p>{this.props.article.contents}</p>
-        <br/>
-        <CommentList commentList={this.props.commentList} submitNewComment={this.handleSubmitNewComment.bind(this)}/>
-      </div>
-    </div>);
+    );
   }
 }
 

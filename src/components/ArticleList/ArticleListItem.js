@@ -11,17 +11,19 @@ export class ArticleListItem extends React.Component {
       commentCountDom = (<span className="badge">{this.props.article.countOfComments}</span>)
     }
 
-    return (<tr>
-      <th>{this.props.article.articleId}</th>
-      <td>
-        <Link to={detailArticleUrl}>
-          {this.props.article.subject}
-        </Link>
-        &nbsp; {commentCountDom}
-      </td>
-      <td>{this.props.article.writerLoginId}</td>
-      <td>{this.props.article.createdDate}</td>
-    </tr>);
+    return (
+      <tr>
+        <th>{this.props.article.articleId}</th>
+        <td>
+          <Link to={detailArticleUrl}>
+            {this.props.article.subject}
+          </Link>
+          &nbsp; {commentCountDom}
+        </td>
+        <td>{this.props.article.writerLoginId}</td>
+        <td>{this.props.article.createdDate}</td>
+      </tr>
+    );
   }
 }
 

@@ -55,22 +55,23 @@ class ArticleList extends React.Component {
 
   render() {
     return (
-    <table className="table table-striped table-hover">
-      <thead className="thead-dark">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Subject</th>          
-          <th scope="col">Writer</th>
-          <th scope="col">Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        {this.props.articleList.map((article, index) => {
-          return (<ArticleListItem key={article.articleId} 
-                                   article={article}/>);
-        })}
-      </tbody>
-    </table>);
+      <table className="table table-striped table-hover">
+        <thead className="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Subject</th>          
+            <th scope="col">Writer</th>
+            <th scope="col">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.props.articleList.map((article, index) => {
+            return (<ArticleListItem key={article.articleId} 
+                                    article={article}/>);
+          })}
+        </tbody>
+      </table>
+    );
   }
 }
 

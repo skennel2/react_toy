@@ -4,8 +4,6 @@ import ArticleList from '../components/ArticleList/ArticleList';
 import ArticleDetail from '../components/ArticleDetail/ArticleDetail';
 import { NotFound } from '../components/NotFound';
 import { Navbar } from '../components/Navbar';
-import axios from 'axios';
-import { GLOBAL } from '../Global' 
 
 class App extends React.Component {
 

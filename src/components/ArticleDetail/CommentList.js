@@ -13,12 +13,13 @@ export class CommentList extends React.Component {
   }
 
   render() {
-    return (<ul className='list-group'>
-      {this.props.commentList.map(comment => {
-        return (
-          <Comment key={comment.commentId} className='list-group-item' comment = {comment}/>
-        );
-      })}
+    return (
+      <ul className='list-group'>
+        {this.props.commentList.map(comment => {
+          return (
+            <Comment key={comment.commentId} className='list-group-item' comment = {comment}/>
+          );
+        })}
       <CommentWriteForm submitNewComment={this.handleSubmitNewComment.bind(this)} />
     </ul>);
   }
