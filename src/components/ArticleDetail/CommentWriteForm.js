@@ -22,10 +22,10 @@ export class CommentWriteForm extends React.Component {
 
     this.props.submitNewComment(this.state.newComment);
     
-    this.setState({
-      newComment: '',
-      showNoCommentContentsAlert: false
-    });
+    // this.setState({
+    //   newComment: '',
+    //   showNoCommentContentsAlert: false
+    // });
   }
 
   handleChangeComment(e) {

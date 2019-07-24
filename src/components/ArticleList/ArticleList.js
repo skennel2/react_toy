@@ -1,7 +1,6 @@
 import React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
-import GLOBAL from '../../Global' 
+import API from '../../utils/API'
 import { ArticleListItem } from "./ArticleListItem";
 import { startReadArticleList, finishReadArticleList } from '../../actions'
 
@@ -16,13 +15,11 @@ class ArticleList extends React.Component {
     if(this.props.pageNumber !== 0){
       return;
     }
-
     let size = 30;
 
     this.props.startRead();
 
-    var url = GLOBAL.ApiServerRoot + '/api/article/list/' + this.props.pageNumber +'/'+ size;
-    axios.get(url).then(res => {
+    API.get('/api/article/list/' + this.props.pageNumber +'/'+ size).then(res => {
       this.props.finishRead(res.data);
     });
   }
@@ -42,11 +39,12 @@ class ArticleList extends React.Component {
     let clientHeight = document.documentElement.clientHeight;
 
     let offset = 2;
-    if(scrollTop + clientHeight + offset > scrollHeight){
+    if(scrollTop + clientHeight + offset > scrollHeight){      
       if(this.props.isLoading === false){
         this.props.startRead();
-        
-        axios.get(GLOBAL.ApiServerRoot + '/api/article/list/'+ this.props.pageNumber +'/30').then(res => {
+
+        const initialPageSize = 30;
+        API.get('/api/article/list/' + this.props.pageNumber + '/' + initialPageSize).then(res => {
           this.props.finishRead(res.data);
         }); 
       }

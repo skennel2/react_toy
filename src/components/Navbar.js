@@ -13,7 +13,7 @@ export class Navbar extends React.Component {
             <div className="container-fluid">
               <ul className="nav navbar-nav">
                 <li role="presentation"><Link to="/">목록</Link></li>
-                {loginDOM}
+                  {loginDOM}
                 <li role="presentation"></li>                
               </ul>
             </div>

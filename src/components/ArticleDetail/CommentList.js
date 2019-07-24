@@ -8,9 +8,9 @@ import PropTypes from 'prop-types';
  * 댓글 목록과 댓글 입력창을 관리한다.
  */
 export class CommentList extends React.Component {
-  handleSubmitNewComment(contents) {
-    this.props.submitNewComment(contents);
-  }
+  // handleSubmitNewComment(contents) {
+  //   this.props.submitNewComment(contents);
+  // }
   
   render() {
     return (
@@ -20,7 +20,7 @@ export class CommentList extends React.Component {
             <Comment key={comment.commentId} className='list-group-item' comment = {comment}/>
           );
         })}
-      <CommentWriteForm submitNewComment={this.handleSubmitNewComment.bind(this)} />
+      <CommentWriteForm />
     </ul>);
   }
 }

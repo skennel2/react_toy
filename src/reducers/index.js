@@ -5,7 +5,9 @@ import
     START_READ_ARTICLE_DETAIL, 
     FINISH_READ_ARTICLE_DETAIL,
     START_READ_COMMENT_BY_ARTICLE_ID,
-    FINISH_READ_COMMENT_BY_ARTICLE_ID 
+    FINISH_READ_COMMENT_BY_ARTICLE_ID,
+    START_ADD_COMMENT,
+    FINISH_ADD_COMMENT
 } from '../actions';
 
 import { combineReducers } from 'redux';
@@ -64,6 +66,18 @@ const articleDetailReducer = function (state = initialArticleDetailListState, ac
             article : state.article,
             commentList : action.commentList,
             isLoading : false
+        }
+    } else if(action.type === START_ADD_COMMENT){
+        return {
+            article : state.article,
+            commentList : state.commentList,
+            isLoading : state.isLoading
+        }
+    } else if(action.type === FINISH_ADD_COMMENT){
+        return {
+            article : state.article,
+            commentList : state.commentList,
+            isLoading : state.isLoading
         }
     } else {
         return state;

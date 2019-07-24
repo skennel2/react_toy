@@ -26,11 +26,3 @@ export class ArticleListItem extends React.Component {
     );
   }
 }
-
-ArticleListItem.propTypes = {
-  article :  PropTypes.object.isRequired
-}
-
-ArticleList = connect(mapStateToProps, mapDispatchToProps)(ArticleList);
-
-export default ArticleList;
