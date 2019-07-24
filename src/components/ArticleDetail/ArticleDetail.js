@@ -8,7 +8,6 @@ import { startReadArticleDetail, startReadCommentByArticleId, finishArticleDetai
  * 게시글 상세 라우팅 엔드포인드
  */
 export class ArticleDetail extends React.Component {
-
   componentWillMount(){    
     var articleId = this.props.match.params.articleId;
 
@@ -27,25 +26,6 @@ export class ArticleDetail extends React.Component {
     });
   }
 
-  // handleSubmitNewComment(newComment) {
-  //   axios.put(GLOBAL.ApiServerRoot + "/api/comment", {
-  //     writer_id: 1,
-  //     article_id: this.props.article.articleId,
-  //     contents: newComment
-  //   }).then(result => {
-  //     this.refreshCommentList();
-  //   });
-  // }
-
-  // refreshCommentList() {
-  //   let commentUrl = GLOBAL.ApiServerRoot + '/api/comment/byarticle/' + this.props.match.params.articleId;
-  //   axios.get(commentUrl).then(result => {
-  //     this.setState({
-  //       commentList: result.data
-  //     });
-  //   });
-  // }
-
   render() {
     return (
       <div className='panel panel-primary'>
@@ -56,7 +36,7 @@ export class ArticleDetail extends React.Component {
           <br/>
           <p>{this.props.article.contents}</p>
           <br/>
-          <CommentList commentList={this.props.commentList} />
+          <CommentList articleId={this.props.article.articleId} commentList={this.props.commentList} />
         </div>
       </div>
     );

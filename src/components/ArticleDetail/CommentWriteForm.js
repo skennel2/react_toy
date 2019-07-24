@@ -1,6 +1,8 @@
 import React from 'react';
 import { Alert } from '../Alert'
 import PropTypes from 'prop-types';
+import API from '../../utils/API'
+
 
 /**
  * 댓글 입력창
@@ -19,13 +21,17 @@ export class CommentWriteForm extends React.Component {
       });
       return;
     }
-
-    this.props.submitNewComment(this.state.newComment);
-    
-    // this.setState({
-    //   newComment: '',
-    //   showNoCommentContentsAlert: false
-    // });
+    alert(this.props.articleId)
+    API.put("/api/comment", {
+      writer_id: 1,
+      article_id: this.props.articleId,
+      contents: this.state.newComment
+    }).then(() => {
+      this.setState({
+        newComment: '',
+        showNoCommentContentsAlert: false
+      });
+    });
   }
 
   handleChangeComment(e) {
