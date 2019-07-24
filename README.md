@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-### 리액트를 이용한 토이프로젝트
+# 리액트를 이용한 토이프로젝트
 
 간단한 CRUD 기능을 포함하는 게시판
 

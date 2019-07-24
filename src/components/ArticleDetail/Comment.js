@@ -22,4 +22,3 @@ Comment.propTypes = {
     submitNewComment :  PropTypes.func,
     commentList : PropTypes.array
 }
-  
