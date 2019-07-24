@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * 댓글 아이템
+ */
 export class Comment extends React.Component {
     render(){
         return(

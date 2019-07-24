@@ -2,6 +2,10 @@ import React from 'react';
 import { Alert } from '../Alert'
 import PropTypes from 'prop-types';
 
+/**
+ * 댓글 입력창
+ * TODO 리덕스 적용 필요
+ */
 export class CommentWriteForm extends React.Component {
   state = {
     newComment : '',

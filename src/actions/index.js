@@ -10,6 +10,9 @@ export const FINISH_READ_COMMENT_BY_ARTICLE_ID = 'FINISH_READ_COMMENT_BY_ARTICLE
 export const START_ADD_COMMENT = 'START_ADD_COMMENT';
 export const FINISH_ADD_COMMENT = 'FINISH_ADD_COMMENT';
 
+// 이파일에는 action들이 정의되어있다.
+// action 이란 리덕스 스토어를 변경
+
 export function startReadArticleList(page){
     return {
         type : START_READ_ARTICLE_LIST,
