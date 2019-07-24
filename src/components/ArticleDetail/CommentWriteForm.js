@@ -21,7 +21,7 @@ export class CommentWriteForm extends React.Component {
       });
       return;
     }
-    alert(this.props.articleId)
+
     API.put("/api/comment", {
       writer_id: 1,
       article_id: this.props.articleId,
