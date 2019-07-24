@@ -9,7 +9,6 @@ import
     START_ADD_COMMENT,
     FINISH_ADD_COMMENT
 } from '../actions';
-
 import { combineReducers } from 'redux';
 
 const initialArticleListState = {
@@ -21,15 +20,14 @@ const initialArticleListState = {
 const articleListReducer = function (state = initialArticleListState, action){
     if(action.type === START_READ_ARTICLE_LIST){
         return {
-            articleList : state.articleList,
-            isLoading : true,
+            ...state,
             pageNumber : state.pageNumber + 1
         }
     } else if(action.type === FINISH_READ_ARTICLE_LIST){
         return {
+            ...state,
             articleList : state.articleList.concat(action.articleList),
             isLoading : false,
-            pageNumber : state.pageNumber
         }
     } else {
         return state;
@@ -45,25 +43,23 @@ const initialArticleDetailListState = {
 const articleDetailReducer = function (state = initialArticleDetailListState, action){
     if(action.type === START_READ_ARTICLE_DETAIL){
         return {
-            article : state.article,
-            commentList : state.commentList,
+            ...state,
             isLoading : true
         }
     } else if(action.type === FINISH_READ_ARTICLE_DETAIL){
         return {
+            ...state,
             article : action.article,
-            commentList : state.commentList,
             isLoading : false
         }
     } else if(action.type === START_READ_COMMENT_BY_ARTICLE_ID){
         return {
-            article : state.article,
-            commentList : state.commentList,
+            ...state,
             isLoading : true
         }
     } else if(action.type === FINISH_READ_COMMENT_BY_ARTICLE_ID){
         return {
-            article : state.article,
+            ...state,
             commentList : action.commentList,
             isLoading : false
         }
