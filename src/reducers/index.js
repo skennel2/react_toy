@@ -21,6 +21,7 @@ const articleListReducer = function (state = initialArticleListState, action){
     if(action.type === START_READ_ARTICLE_LIST){
         return {
             ...state,
+            isLoading : true,
             pageNumber : state.pageNumber + 1
         }
     } else if(action.type === FINISH_READ_ARTICLE_LIST){
@@ -67,13 +68,13 @@ const articleDetailReducer = function (state = initialArticleDetailListState, ac
         return {
             article : state.article,
             commentList : state.commentList,
-            isLoading : state.isLoading
+            isLoading : true
         }
     } else if(action.type === FINISH_ADD_COMMENT){
         return {
             article : state.article,
             commentList : state.commentList,
-            isLoading : state.isLoading
+            isLoading : false
         }
     } else {
         return state;

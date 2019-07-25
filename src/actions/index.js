@@ -1,3 +1,5 @@
+import API from '../utils/API'
+
 export const START_READ_ARTICLE_LIST = 'START_READ_ARTICLE_LIST';
 export const FINISH_READ_ARTICLE_LIST = 'FINISH_READ_ARTICLE_LIST';
 
@@ -11,7 +13,7 @@ export const START_ADD_COMMENT = 'START_ADD_COMMENT';
 export const FINISH_ADD_COMMENT = 'FINISH_ADD_COMMENT';
 
 // 이파일에는 action들이 정의되어있다.
-// action 이란 리덕스 스토어를 변경
+// action 이란 리덕스 스토어를 변경하는 type이란 속성을 가진 객체를 말한다.
 
 export function startReadArticleList(page){
     return {
@@ -65,5 +67,18 @@ export function finishAddComment(comment){
     return {
         type : FINISH_ADD_COMMENT,
         comment : comment
+    }
+}
+
+export function fetchAppendNextPage(pageNumber){
+    const size = 30;
+    
+    return (dispatch)=>{
+        dispatch(startReadArticleList());
+
+        API.get('/api/article/list/' + pageNumber +'/'+ size)
+            .then((response)=>{
+                dispatch(finishReadArticleList(response.data));
+            });
     }
 }

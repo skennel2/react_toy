@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import API from '../../utils/API'
+import {  bindActionCreators } from 'redux';
 import { ArticleListItem } from "./ArticleListItem";
-import { startReadArticleList, finishReadArticleList } from '../../actions'
+import { fetchAppendNextPage } from '../../actions'
 
 class ArticleList extends React.Component {
   
@@ -11,21 +11,13 @@ class ArticleList extends React.Component {
     this.infiniteScroll = this.infiniteScroll.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount(){
+    window.addEventListener('scroll', this.infiniteScroll);
+
     if(this.props.pageNumber !== 0){
       return;
     }
-    let size = 30;
-
-    this.props.startRead();
-
-    API.get('/api/article/list/' + this.props.pageNumber +'/'+ size).then(res => {
-      this.props.finishRead(res.data);
-    });
-  }
-
-  componentDidMount(){
-    window.addEventListener('scroll', this.infiniteScroll);
+    this.props.fetchAppendNextPage(this.props.pageNumber);
   }
 
   componentWillUnmount() {
@@ -38,20 +30,19 @@ class ArticleList extends React.Component {
 
     let clientHeight = document.documentElement.clientHeight;
 
-    let offset = 2;
-    if(scrollTop + clientHeight + offset > scrollHeight){      
+    let margin = 2;
+    if(scrollTop + clientHeight + margin > scrollHeight){      
       if(this.props.isLoading === false){
-        this.props.startRead();
-
-        const initialPageSize = 30;
-        API.get('/api/article/list/' + this.props.pageNumber + '/' + initialPageSize).then(res => {
-          this.props.finishRead(res.data);
-        }); 
+        this.props.fetchAppendNextPage(this.props.pageNumber);
       }
     }
   }
 
   render() {
+    if(this.props.isLoading){
+      return (<div>로딩중</div>);
+    }
+
     return (
       <table className="table table-striped table-hover">
         <thead className="thead-dark">
@@ -83,12 +74,10 @@ const mapStateToProps = function(state){
 
 const mapDispatchToProps = function(dispatch) {
   return {
-    startRead : function(){
-      dispatch(startReadArticleList())
-    },
-    finishRead : function(articleList){
-      dispatch(finishReadArticleList(articleList))
-    }
+    fetchAppendNextPage : bindActionCreators(fetchAppendNextPage, dispatch),
+    // finishRead : function(articleList){
+    //   dispatch(finishReadArticleList(articleList))
+    // }
   }
 };
 
