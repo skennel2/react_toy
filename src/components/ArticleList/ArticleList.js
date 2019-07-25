@@ -38,7 +38,7 @@ class ArticleList extends React.Component {
   //   }
   // }
   onClickNextPage(){
-    this.props.onClickNextPage();
+    this.props.onClickNextPage();  
     this.props.fetchArticleList(this.props.pageNumber + 1);
   }
 
@@ -51,9 +51,45 @@ class ArticleList extends React.Component {
     this.props.fetchArticleList(this.props.pageNumber - 1);
   }
 
+  renderArticleListItem(article, index){
+    return (
+      <ArticleListItem key={article.articleId} 
+                       article={article}/>
+    );
+  }
+
   render() {
     if(this.props.isLoading){
       return (<div>로딩중</div>);
+    }
+
+    let pageMoveButtonGroup;
+    if(this.props.articleList.length > 0){
+      pageMoveButtonGroup = (
+        <nav aria-label="Page navigation example">
+          <ul className="pagination">
+            <li className="page-item">
+              <button className="page-link" onClick={this.onClickPreviousPage.bind(this)}>Previous</button>
+            </li>
+            <li className="page-item">
+              <button className="page-link" onClick={this.onClickNextPage.bind(this)}>Next</button>
+            </li>
+          </ul>
+        </nav>
+      );
+    }else {
+      pageMoveButtonGroup = (
+        <div>
+          표시할 데이터가 없습니다.
+          <nav aria-label="Page navigation example">
+            <ul className="pagination">
+              <li className="page-item">
+                <button className="page-link" onClick={this.onClickPreviousPage.bind(this)}>Previous</button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      );
     }
 
     return (
@@ -68,14 +104,10 @@ class ArticleList extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.articleList.map((article, index) => {
-              return (<ArticleListItem key={article.articleId} 
-                                      article={article}/>);
-            })}
+            {this.props.articleList.map(this.renderArticleListItem)}
           </tbody>
         </table>
-        <button className="btn btn-default" onClick={this.onClickPreviousPage.bind(this)}>Previous</button>
-        <button className="btn btn-default" onClick={this.onClickNextPage.bind(this)}>Next</button>
+        {pageMoveButtonGroup}
       </div>
     );
   }
