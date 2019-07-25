@@ -22,6 +22,7 @@ class App extends React.Component {
               path 속성을 통해 url 패턴을 지정하고, url에 따른 루트 컴포넌트를 지정해 주는것이 핵심이다.  
             */}
             <Route exact path="/" component={ArticleList}/> }/>
+            <Route exact path="/:pageNumber" component={ArticleList}/> }/>
 
             {/* 
               url에는 아래 :articleId와 같이 주소변수를 넘겨주는 것이 가능하다.
