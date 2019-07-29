@@ -43,18 +43,19 @@ class PageNumberController extends React.Component {
                     </ul>
                 </nav>
             );
-        } else if (this.props.mode === 'NORMAL'){
+        } else if (this.props.mode === 'END_OF_PAGE'){
             pageMoveButtonGroup = (
-                <nav aria-label="Page navigation example">
-                    <ul className="pagination">
-                        <li className="page-item">
-                            <button className="page-link" onClick={this.onClickPreviousPage.bind(this)}>Previous</button>
-                        </li>
-                        <li className="page-item">
-                            <button className="page-link" onClick={this.onClickNextPage.bind(this)}>Next</button>
-                        </li>
-                    </ul>
-                </nav>
+                <div>
+                    표시할 데이터가 없습니다.
+                    <nav aria-label="Page navigation example">
+                        
+                        <ul className="pagination">
+                            <li className="page-item">
+                                <button className="page-link" onClick={this.onClickPreviousPage.bind(this)}>Previous</button>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             );
         } else if(this.props.mode === 'FIRST_PAGE'){
             pageMoveButtonGroup = (
