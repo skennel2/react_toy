@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {  bindActionCreators } from 'redux';
 import { ArticleListItem } from "./ArticleListItem";
 import { fetchArticleList, nextPage, previousPage } from '../../actions'
+import PageNumberController from './PageNumberController'
 
 class ArticleList extends React.Component {
   
@@ -37,10 +38,10 @@ class ArticleList extends React.Component {
   //     }
   //   }
   // }
-  onClickNextPage(){
-    this.props.onClickNextPage();  
-    this.props.fetchArticleList(this.props.pageNumber + 1);
-  }
+  // onClickNextPage(){
+  //   this.props.onClickNextPage();  
+  //   this.props.fetchArticleList(this.props.pageNumber + 1);
+  // }
 
   onClickPreviousPage(){
     if(this.props.pageNumber === 0){
@@ -63,33 +64,16 @@ class ArticleList extends React.Component {
       return (<div>로딩중</div>);
     }
 
-    let pageMoveButtonGroup;
-    if(this.props.articleList.length > 0){
-      pageMoveButtonGroup = (
-        <nav aria-label="Page navigation example">
-          <ul className="pagination">
-            <li className="page-item">
-              <button className="page-link" onClick={this.onClickPreviousPage.bind(this)}>Previous</button>
-            </li>
-            <li className="page-item">
-              <button className="page-link" onClick={this.onClickNextPage.bind(this)}>Next</button>
-            </li>
-          </ul>
-        </nav>
-      );
-    }else {
-      pageMoveButtonGroup = (
-        <div>
-          표시할 데이터가 없습니다.
-          <nav aria-label="Page navigation example">
-            <ul className="pagination">
-              <li className="page-item">
-                <button className="page-link" onClick={this.onClickPreviousPage.bind(this)}>Previous</button>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      );
+    let pageNumberControllerMode;
+
+    if(this.props.articleList.length === 0 && this.props.pageNumber === 0) {
+      pageNumberControllerMode = 'NO_CONTENTS';
+    } else if(this.props.articleList.length === 0 && this.props.pageNumber !== 0) {
+      pageNumberControllerMode = 'END_OF_PAGE';
+    } else if(this.props.articleList.length !== 0 && this.props.pageNumber === 0) {
+      pageNumberControllerMode = 'FIRST_PAGE';
+    } else {
+      pageNumberControllerMode = 'NORMAL';
     }
 
     return (
@@ -107,7 +91,7 @@ class ArticleList extends React.Component {
             {this.props.articleList.map(this.renderArticleListItem)}
           </tbody>
         </table>
-        {pageMoveButtonGroup}
+        <PageNumberController mode = {pageNumberControllerMode} />
       </div>
     );
   }
@@ -123,9 +107,7 @@ const mapStateToProps = function(state){
 
 const mapDispatchToProps = function(dispatch) {
   return {
-    fetchArticleList : bindActionCreators(fetchArticleList, dispatch),
-    onClickNextPage : () => dispatch(nextPage()),
-    onClickPreviousPage : () => dispatch(previousPage())
+    fetchArticleList : bindActionCreators(fetchArticleList, dispatch)
   }
 };
 
