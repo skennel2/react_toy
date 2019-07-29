@@ -98,15 +98,9 @@ export function fetchArticleList(pageNumber){
     }
 }
 
-// export function nextPage(pageNumber){
-//     const size = 30;
-    
-//     return (dispatch)=>{
-//         dispatch(startReadArticleList());
-
-//         API.get('/api/article/list/' + pageNumber +'/'+ size)
-//             .then((response)=>{
-//                 dispatch(finishReadArticleList(response.data));
-//             });
-//     }
-// }
+export function submitNewComment(newComment){
+    return (dispatch)=>{
+        dispatch(startAddComment());
+        dispatch(finishAddComment(newComment));
+    }
+}
