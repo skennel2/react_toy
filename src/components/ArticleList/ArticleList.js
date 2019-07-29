@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {  bindActionCreators } from 'redux';
 import { ArticleListItem } from "./ArticleListItem";
-import { fetchArticleList, nextPage, previousPage } from '../../actions'
+import { fetchArticleList } from '../../actions'
 import PageNumberController from './PageNumberController'
 
 class ArticleList extends React.Component {
@@ -15,9 +15,6 @@ class ArticleList extends React.Component {
   componentDidMount(){
     window.addEventListener('scroll', this.infiniteScroll);
 
-    // if(this.props.pageNumber !== 0){
-    //   return;
-    // }
     this.props.fetchArticleList(this.props.pageNumber);
   }
 
@@ -38,19 +35,6 @@ class ArticleList extends React.Component {
   //     }
   //   }
   // }
-  // onClickNextPage(){
-  //   this.props.onClickNextPage();  
-  //   this.props.fetchArticleList(this.props.pageNumber + 1);
-  // }
-
-  onClickPreviousPage(){
-    if(this.props.pageNumber === 0){
-      alert('젓번째 페이지입니다.')
-      return;
-    }
-    this.props.onClickPreviousPage();
-    this.props.fetchArticleList(this.props.pageNumber - 1);
-  }
 
   renderArticleListItem(article, index){
     return (

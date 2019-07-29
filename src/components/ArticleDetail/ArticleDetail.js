@@ -1,8 +1,9 @@
 import React from 'react';
 import API from '../../utils/API'
-import { CommentList } from "./CommentList";
 import { connect } from 'react-redux';
-import { startReadArticleDetail, startReadCommentByArticleId, finishArticleDetail, finishReadCommentByArticleId } from '../../actions'
+import { CommentList } from "./CommentList";
+import {  bindActionCreators } from 'redux';
+import { fetchArtcleDetail } from '../../actions'
 
 /**
  * 게시글 상세 라우팅 엔드포인드
@@ -11,19 +12,7 @@ export class ArticleDetail extends React.Component {
   componentWillMount(){    
     var articleId = this.props.match.params.articleId;
 
-    this.props.startArticleRead(articleId);
-    this.props.startCommentRead(articleId);
-
-    API.get('/api/article/' + articleId).then(result => {
-      API.get('/api/comment/byarticle/' + articleId).then(result2 => {
-        this.props.finishArticleRead(result.data);
-        this.props.finishCommentRead(result2.data);
-      }).catch(ex =>{
-        console.log(ex);
-      });
-    }).catch(ex =>{
-      console.log(ex);
-    });
+    this.props.fetchArtcleDetail(articleId);
   }
 
   render() {
@@ -53,18 +42,7 @@ const mapStateToProps = function(state){
 
 const mapDispatchToProps = function(dispatch){
   return {
-    startArticleRead : function(articleId){
-      dispatch(startReadArticleDetail(articleId))
-    },
-    finishArticleRead : function(article){
-      dispatch(finishArticleDetail(article))
-    },
-    startCommentRead : function(articleId){
-      dispatch(startReadCommentByArticleId(articleId))
-    },
-    finishCommentRead : function(commentList){
-      dispatch(finishReadCommentByArticleId(commentList))
-    } 
+    fetchArtcleDetail : bindActionCreators(fetchArtcleDetail, dispatch)
   }
 }
 

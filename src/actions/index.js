@@ -44,10 +44,9 @@ export function previousPage(){
     }    
 }
 
-export function startReadArticleDetail(id){
+export function startReadArticleDetail(){
     return {
         type : START_READ_ARTICLE_DETAIL,
-        id : id
     }
 }
 
@@ -58,10 +57,9 @@ export function finishArticleDetail(article){
     }
 }
 
-export function startReadCommentByArticleId(articleId){
+export function startReadCommentByArticleId(){
     return {
         type : START_READ_COMMENT_BY_ARTICLE_ID,
-        articleId : articleId
     }
 }
 
@@ -95,6 +93,25 @@ export function fetchArticleList(pageNumber){
             .then((response)=>{
                 dispatch(finishReadArticleList(response.data));
             });
+    }
+}
+
+export function fetchArtcleDetail(articleId){
+    return (dispatch) => {
+        dispatch(startReadArticleDetail());
+        dispatch(startReadCommentByArticleId());
+  
+        API.get('/api/article/' + articleId).then(result => {
+          API.get('/api/comment/byarticle/' + articleId).then(result2 => {
+            dispatch(finishArticleDetail(result.data));
+            dispatch(finishReadCommentByArticleId(result2.data));
+          }).catch(ex =>{
+            console.log(ex);
+          });
+        }).catch(ex =>{
+          console.log(ex);
+        });
+
     }
 }
 
