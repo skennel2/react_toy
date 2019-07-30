@@ -60,8 +60,6 @@ class ArticleList extends React.Component {
       pageNumberControllerMode = 'NORMAL';
     }
 
-    console.log(pageNumberControllerMode)
-
     return (
       <div>
         <table className="table table-striped table-hover">

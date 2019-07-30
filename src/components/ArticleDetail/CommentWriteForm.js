@@ -2,7 +2,9 @@ import React from 'react';
 import { Alert } from '../Alert'
 import PropTypes from 'prop-types';
 import API from '../../utils/API'
-
+import { submitNewComment } from '../../actions'
+import { connect } from 'react-redux';
+import {  bindActionCreators } from 'redux';
 
 /**
  * 댓글 입력창
@@ -22,15 +24,9 @@ export class CommentWriteForm extends React.Component {
       return;
     }
 
-    API.put("/api/comment", {
-      writer_id: 1,
-      article_id: this.props.articleId,
-      contents: this.state.newComment
-    }).then(() => {
-      this.setState({
-        newComment: '',
-        showNoCommentContentsAlert: false
-      });
+    this.props.submitNewComment({
+      articleId : this.props.articleId,
+      newComment : this.state.newComment
     });
   }
 
@@ -64,3 +60,17 @@ CommentWriteForm.propTypes = {
   submitNewComment :  PropTypes.func.isRequired
 }
 
+const mapStateToProps = function(state){
+  return { 
+  };
+};
+
+const mapDispatchToProps = function(dispatch) {
+  return {
+    submitNewComment : bindActionCreators(submitNewComment, dispatch)
+  }
+};
+
+CommentWriteForm = connect(mapStateToProps, mapDispatchToProps)(CommentWriteForm);
+
+export default CommentWriteForm;

@@ -111,13 +111,25 @@ export function fetchArtcleDetail(articleId){
         }).catch(ex =>{
           console.log(ex);
         });
-
     }
 }
 
 export function submitNewComment(newComment){
     return (dispatch)=>{
+
         dispatch(startAddComment());
-        dispatch(finishAddComment(newComment));
+
+        API.put("/api/comment", {
+            writer_id: 1,
+            article_id: newComment.articleId,
+            contents: newComment.newComment
+        }).then(() => {
+            dispatch(startReadCommentByArticleId());
+            API.get('/api/comment/byarticle/' + newComment.articleId).then(result => {
+                dispatch(finishReadCommentByArticleId(result.data));
+            }).catch(ex =>{
+            console.log(ex);
+            });
+        });
     }
 }
