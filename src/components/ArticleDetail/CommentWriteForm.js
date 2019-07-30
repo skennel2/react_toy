@@ -28,6 +28,11 @@ export class CommentWriteForm extends React.Component {
       articleId : this.props.articleId,
       newComment : this.state.newComment
     });
+
+    this.setState({
+      newComment : '',
+      showNoCommentContentsAlert : false
+    });
   }
 
   handleChangeComment(e) {
